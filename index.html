@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Browse international job opportunities and submit your application.">
+  <title>GlobalPath Careers | International Jobs</title>
+  <style>
+    :root { --navy:#10243a; --blue:#155eef; --pale:#f3f7fc; --green:#087f5b; --ink:#182230; --muted:#667085; --line:#e4eaf2; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Arial,Helvetica,sans-serif; color:var(--ink); background:#fff; line-height:1.5; }
+    header { background:var(--navy); color:white; }
+    .topbar { max-width:1100px; margin:auto; padding:18px 20px; display:flex; justify-content:space-between; align-items:center; gap:15px; }
+    .brand { font-weight:800; font-size:1.25rem; letter-spacing:.2px; }
+    .brand span { color:#76e4c2; }
+    nav { display:flex; gap:18px; flex-wrap:wrap; }
+    nav a { color:#e8eef7; text-decoration:none; font-size:.92rem; }
+    .hero { max-width:1100px; margin:auto; padding:58px 20px 64px; display:grid; grid-template-columns:1.2fr .8fr; gap:35px; align-items:center; }
+    .eyebrow { color:#76e4c2; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; font-size:.78rem; }
+    h1 { font-size:clamp(2rem,5vw,3.5rem); line-height:1.08; margin:12px 0 18px; }
+    .hero p { color:#d4deeb; max-width:620px; }
+    .hero-card { background:white; color:var(--ink); border-radius:18px; padding:24px; box-shadow:0 15px 45px #0002; }
+    .hero-card h2 { margin-top:0; font-size:1.15rem; }
+    .quick-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:22px; }
+    .stat { background:#f0f6ff; border-radius:12px; padding:12px; text-align:center; }
+    .stat strong { display:block; font-size:1.2rem; color:var(--blue); }
+    .stat small { color:var(--muted); }
+    main { max-width:1100px; margin:auto; padding:34px 20px 60px; }
+    .section-heading { display:flex; justify-content:space-between; align-items:end; gap:15px; flex-wrap:wrap; margin-bottom:20px; }
+    h2 { margin:0 0 8px; }
+    .muted { color:var(--muted); }
+    .filters { display:grid; grid-template-columns:2fr 1fr 1fr; gap:12px; margin:20px 0 24px; }
+    input, select, textarea { width:100%; padding:12px 13px; border:1px solid #cfd8e3; border-radius:9px; font:inherit; background:#fff; color:var(--ink); }
+    label { display:block; font-size:.9rem; font-weight:700; margin-bottom:6px; }
+    .jobs { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+    .job { border:1px solid var(--line); border-radius:14px; padding:20px; transition:box-shadow .2s,transform .2s; }
+    .job:hover { box-shadow:0 8px 25px #10243a12; transform:translateY(-2px); }
+    .job-top { display:flex; justify-content:space-between; gap:12px; align-items:start; }
+    .flag { font-size:1.5rem; }
+    .tag { display:inline-block; background:#edf4ff; color:#174ea6; border-radius:20px; padding:4px 9px; font-size:.78rem; margin:4px 4px 0 0; }
+    .salary { color:var(--green); font-weight:800; margin:12px 0; }
+    button { cursor:pointer; border:0; border-radius:9px; padding:12px 16px; font:inherit; font-weight:700; }
+    .primary { background:var(--blue); color:white; }
+    .primary:hover { background:#104bc4; }
+    .secondary { background:#eaf0f7; color:var(--navy); }
+    .job button { width:100%; margin-top:12px; }
+    .notice { border-left:4px solid #f0a000; background:#fff8e8; padding:14px 16px; border-radius:8px; margin:24px 0; font-size:.92rem; }
+    .application { margin-top:48px; display:grid; grid-template-columns:.75fr 1.25fr; gap:25px; align-items:start; }
+    .info-panel { background:var(--navy); color:white; border-radius:15px; padding:24px; }
+    .info-panel p { color:#d4deeb; }
+    .form-panel { border:1px solid var(--line); border-radius:15px; padding:24px; }
+    .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .field { margin-bottom:14px; }
+    .full { grid-column:1/-1; }
+    .check { display:flex; align-items:flex-start; gap:9px; font-weight:400; font-size:.88rem; }
+    .check input { width:auto; margin-top:5px; }
+    .payment-box { background:#f0faf6; border:1px solid #b6e5d2; padding:15px; border-radius:10px; margin:16px 0; }
+    .payment-box strong { color:#076749; }
+    .payment-box p { margin:6px 0 0; font-size:.9rem; }
+    footer { background:#0b1b2c; color:#d4deeb; padding:28px 20px; text-align:center; font-size:.88rem; }
+    footer a { color:#9dc2ff; }
+    .modal-backdrop { display:none; position:fixed; inset:0; z-index:10; background:#071426b8; padding:18px; align-items:center; justify-content:center; }
+    .modal { max-width:460px; width:100%; background:white; padding:25px; border-radius:16px; box-shadow:0 20px 60px #0004; }
+    .modal h2 { margin-top:0; }
+    .modal-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:20px; }
+    .message { margin-top:14px; padding:12px; border-radius:8px; background:#edf8f3; color:#075c40; display:none; }
+    @media(max-width:760px) { .hero,.application { grid-template-columns:1fr; } .filters,.jobs { grid-template-columns:1fr; } .topbar { align-items:flex-start; flex-direction:column; } nav { gap:12px; } .form-grid { grid-template-columns:1fr; } .full { grid-column:auto; } }
+  </style>
+</head>
+<body>
+<header>
+  <div class="topbar">
+    <div class="brand">GlobalPath <span>Careers</span></div>
+    <nav aria-label="Main navigation">
+      <a href="#jobs">Find jobs</a><a href="#how">How it works</a><a href="#apply">Apply</a>
+    </nav>
+  </div>
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Your next opportunity starts here</div>
+      <h1>Explore work opportunities around the world.</h1>
+      <p>Browse sample opportunities in the UAE, Canada, Qatar and Australia. Review the requirements carefully and apply with accurate information.</p>
+      <a href="#jobs"><button class="primary">Explore jobs</button></a>
+      <div class="quick-stats">
+        <div class="stat"><strong>4</strong><small>Destinations</small></div>
+        <div class="stat"><strong>Open</strong><small>Applications</small></div>
+        <div class="stat"><strong>Free</strong><small>Browse jobs</small></div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <h2>Before you apply</h2>
+      <p class="muted">Check the employer, written contract, visa requirements and any official recruitment fees. Never pay someone who guarantees a visa or job.</p>
+      <ul>
+        <li>Use a working phone number and email.</li>
+        <li>Never share your M-PESA PIN or OTP.</li>
+        <li>Verify vacancies with the employer or licensed recruiter.</li>
+      </ul>
+    </div>
+  </section>
+</header>
+
+<main>
+  <section id="jobs">
+    <div class="section-heading">
+      <div><h2>Featured opportunities</h2><div class="muted">These are demonstration listings for the website template, not verified live vacancies.</div></div>
+    </div>
+    <div class="filters">
+      <input id="search" type="search" placeholder="Search job title or skill" aria-label="Search job title or skill">
+      <select id="country" aria-label="Filter by country">
+        <option value="">All destinations</option><option>UAE (Dubai)</option><option>Canada</option><option>Qatar</option><option>Australia</option>
+      </select>
+      <select id="category" aria-label="Filter by job category">
+        <option value="">All job categories</option><option>Hospitality</option><option>Construction</option><option>Care</option><option>Driving</option><option>Warehouse</option>
+      </select>
+    </div>
+    <div class="jobs" id="job-list">
+      <article class="job" data-country="UAE (Dubai)" data-category="Hospitality" data-search="hotel cleaner hospitality housekeeping">
+        <div class="job-top"><div><h3>Hotel Housekeeping Assistant</h3><div class="muted">Hospitality · Employer details to be verified</div></div><span class="flag">🇦🇪</span></div>
+        <div class="salary">Salary: Confirm with employer</div><span class="tag">Entry level may be considered</span><span class="tag">Dubai, UAE</span>
+        <p>Review the employer's accommodation, working hours, contract and visa arrangements before accepting.</p>
+        <button class="primary apply-job" data-job="Hotel Housekeeping Assistant">Apply for this job</button>
+      </article>
+      <article class="job" data-country="Canada" data-category="Warehouse" data-search="warehouse associate packing inventory">
+        <div class="job-top"><div><h3>Warehouse Associate</h3><div class="muted">Logistics · Employer details to be verified</div></div><span class="flag">🇨🇦</span></div>
+        <div class="salary">Salary: Confirm with employer</div><span class="tag">Warehouse</span><span class="tag">Canada</span>
+        <p>Check whether the employer is authorised to hire foreign workers and whether a work permit is required.</p>
+        <button class="primary apply-job" data-job="Warehouse Associate">Apply for this job</button>
+      </article>
+      <article class="job" data-country="Qatar" data-category="Construction" data-search="construction helper labourer site safety">
+        <div class="job-top"><div><h3>Construction Helper</h3><div class="muted">Construction · Employer details to be verified</div></div><span class="flag">🇶🇦</span></div>
+        <div class="salary">Salary: Confirm with employer</div><span class="tag">Construction</span><span class="tag">Qatar</span>
+        <p>Ask for written details about duties, safety equipment, accommodation, transport and overtime.</p>
+        <button class="primary apply-job" data-job="Construction Helper">Apply for this job</button>
+      </article>
+      <article class="job" data-country="Australia" data-category="Care" data-search="aged care support worker care assistant">
+        <div class="job-top"><div><h3>Care Support Worker</h3><div class="muted">Care services · Employer details to be verified</div></div><span class="flag">🇦🇺</span></div>
+        <div class="salary">Salary: Confirm with employer</div><span class="tag">Relevant training may be required</span><span class="tag">Australia</span>
+        <p>Confirm qualification, English-language, registration and visa requirements from official sources.</p>
+        <button class="primary apply-job" data-job="Care Support Worker">Apply for this job</button>
+      </article>
+    </div>
+    <div id="no-results" class="notice" style="display:none">No sample jobs match those filters. Try another search.</div>
+  </section>
+
+  <div class="notice"><strong>Important:</strong> This template does not represent a licensed recruitment agency and does not verify vacancies. Do not advertise a vacancy as real until you have checked it with the employer. Do not charge applicants a fee unless it is lawful, clearly disclosed and properly documented.</div>
+
+  <section id="how">
+    <h2>How the application process should work</h2>
+    <ol>
+      <li>Choose a vacancy and read its requirements.</li>
+      <li>Submit your contact details and relevant experience.</li>
+      <li>The recruiter verifies your details and shares the next steps.</li>
+      <li>Confirm the employer and contract independently before paying any legitimate, disclosed fee.</li>
+    </ol>
+  </section>
+
+  <section class="application" id="apply">
+    <aside class="info-panel">
+      <h2>Start your application</h2>
+      <p>Fill in the form with truthful information. This sample page only demonstrates the front-end and does not send your details to a server.</p>
+      <p><strong>Privacy:</strong> A live website should explain how your personal data is stored, who can access it and how to request its deletion.</p>
+      <p><strong>M-PESA safety:</strong> Never enter your PIN or one-time password into a website or give it to a recruiter.</p>
+    </aside>
+    <div class="form-panel">
+      <h2>Applicant details</h2>
+      <p class="muted">Fields marked * are required.</p>
+      <form id="application-form">
+        <div class="form-grid">
+          <div class="field"><label for="fullname">Full name *</label><input id="fullname" name="fullname" autocomplete="name" required placeholder="Your full name"></div>
+          <div class="field"><label for="email">Email address *</label><input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com"></div>
+          <div class="field"><label for="phone">Phone number *</label><input id="phone" name="phone" type="tel" autocomplete="tel" required placeholder="e.g. 07xx xxx xxx"></div>
+          <div class="field"><label for="destination">Preferred destination *</label><select id="destination" name="destination" required><option value="">Choose country</option><option>UAE (Dubai)</option><option>Canada</option><option>Qatar</option><option>Australia</option></select></div>
+          <div class="field full"><label for="job-title">Job applying for *</label><input id="job-title" name="job-title" required placeholder="Select Apply on a job card or enter job title"></div>
+          <div class="field full"><label for="experience">Relevant skills / experience *</label><textarea id="experience" name="experience" rows="4" minlength="20" required placeholder="Describe your skills, experience, certificates and languages (at least 20 characters)"></textarea></div>
+          <div class="field full"><label class="check"><input type="checkbox" required> I confirm that the information I provided is accurate and I have read the privacy notice. *</label></div>
+        </div>
+        <div class="payment-box">
+          <strong>M-PESA payments: disabled pending legal and business verification</strong>
+          <p>This starter does not charge applicants. Before activating any fee, confirm your recruitment licence and fee arrangement with the National Employment Authority and get the appropriate Daraja business setup. Never request a PIN or OTP.</p>
+        </div>
+        <button class="primary" type="submit">Submit application (free demo)</button>
+        <button class="secondary" type="button" id="mpesa-demo" style="margin-left:6px">Preview M-PESA notice</button>
+        <div class="message" id="form-message" role="status"></div>
+      </form>
+    </div>
+  </section>
+</main>
+<footer>
+  <div><strong>GlobalPath Careers — Demo Template</strong></div>
+  <p>Sample listings only. Not an employment agency, employer, or government immigration service.</p>
+  <p>For a live service, add verified vacancies, a privacy policy, secure server-side application handling and official payment integration.</p>
+</footer>
+
+<div class="modal-backdrop" id="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal">
+    <h2 id="modal-title">M-PESA prompt preview</h2>
+    <p>This is only a preview. <strong>No STK Push has been sent and no payment will be taken.</strong></p>
+    <p>A real payment request should show the business name, exact amount, reason for payment and refund/contact policy before the customer approves it on their own phone.</p>
+    <p><strong>Never ask for the applicant's M-PESA PIN or OTP.</strong></p>
+    <div class="modal-actions"><button class="secondary" id="close-modal">Close</button></div>
+  </div>
+</div>
+<script>
+  const jobCards = [...document.querySelectorAll('.job')];
+  const searchInput = document.getElementById('search');
+  const countrySelect = document.getElementById('country');
+  const categorySelect = document.getElementById('category');
+  function filterJobs() {
+    const term = searchInput.value.trim().toLowerCase();
+    const country = countrySelect.value;
+    const category = categorySelect.value;
+    let shown = 0;
+    jobCards.forEach(card => {
+      const matches = (!term || (card.dataset.search + ' ' + card.innerText).toLowerCase().includes(term))
+        && (!country || card.dataset.country === country)
+        && (!category || card.dataset.category === category);
+      card.style.display = matches ? '' : 'none';
+      if (matches) shown++;
+    });
+    document.getElementById('no-results').style.display = shown ? 'none' : 'block';
+  }
+  searchInput.addEventListener('input', filterJobs);
+  countrySelect.addEventListener('change', filterJobs);
+  categorySelect.addEventListener('change', filterJobs);
+
+  document.querySelectorAll('.apply-job').forEach(button => {
+    button.addEventListener('click', () => {
+      document.getElementById('job-title').value = button.dataset.job;
+      document.getElementById('apply').scrollIntoView({behavior:'smooth'});
+      document.getElementById('fullname').focus({preventScroll:true});
+    });
+  });
+
+  document.getElementById('application-form').addEventListener('submit', event => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const message = document.getElementById('form-message');
+    const submitButton = form.querySelector('button[type="submit"]');
+    const payload = {
+      full_name: form.elements.fullname.value.trim(),
+      email: form.elements.email.value.trim(),
+      phone: form.elements.phone.value.trim(),
+      destination: form.elements.destination.value,
+      job_title: form.elements['job-title'].value.trim(),
+      experience: form.elements.experience.value.trim()
+    };
+    submitButton.disabled = true;
+    submitButton.textContent = 'Submitting…';
+    message.style.display = 'block';
+    message.textContent = 'Sending your application securely…';
+    fetch('/api/applications', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(async response => {
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.error || 'Could not submit. Please try again.');
+      message.textContent = 'Application received. Reference: ' + data.reference + '. This does not mean a job or visa is guaranteed.';
+      form.reset();
+    }).catch(error => {
+      message.textContent = error.message + ' If this is a local preview, the backend server must be running.';
+    }).finally(() => {
+      submitButton.disabled = false;
+      submitButton.textContent = 'Submit application (free demo)';
+    });
+  });
+
+  const backdrop = document.getElementById('modal-backdrop');
+  document.getElementById('mpesa-demo').addEventListener('click', () => { backdrop.style.display = 'flex'; });
+  document.getElementById('close-modal').addEventListener('click', () => { backdrop.style.display = 'none'; });
+  backdrop.addEventListener('click', event => { if (event.target === backdrop) backdrop.style.display = 'none'; });
+</script>
+</body>
+</html>
